@@ -4,13 +4,21 @@
   
   
   <entry>
-    <title>Hello World</title>
-    <link href="/2020/06/15/hello-world/"/>
-    <url>/2020/06/15/hello-world/</url>
+    <title>React Spin 页面数据加载动画处理</title>
+    <link href="/2020/06/15/React%20Spin%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E5%A4%84%E7%90%86/"/>
+    <url>/2020/06/15/React%20Spin%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E5%A4%84%E7%90%86/</url>
     
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="hljs bash">$ hexo new <span class="hljs-string">"My New Post"</span></code></pre><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="hljs bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="hljs bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="hljs bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。（引用antd Spin组件定义）</p><h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><ol><li>前端框架页面首屏加载</li><li>form表单等组件从后台初次获取、更新内容时的渲染</li></ol><h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="ant-design-spin-component"><a href="#ant-design-spin-component" class="headerlink" title="ant design spin component"></a>ant design<a href="https://ant.design/components/spin-cn/" target="_blank" rel="noopener"> spin component</a></h3><p>ant design的组件可以自定义，使用组件应该关注其兼容性的处理</p><h3 id="生命周期中处理渲染"><a href="#生命周期中处理渲染" class="headerlink" title="生命周期中处理渲染"></a>生命周期中处理渲染</h3><p>加载页面时的处理方式：在<code>comoonentWillMount</code>中定义一个当前开始加载的状态，直到<code>componentDidMount</code>时切换渲染已经完全加载完的组件内容。<br>此方式在更新组件内容时<code>componentWillUpdate</code>也同步可以处理。<br>可以定时一段时间来关闭加载状态，具体实现方式随所需效果和接口返回的时间具体处理。</p><pre><code class="hljs javascript">componentWillMount () &#123;  <span class="hljs-keyword">let</span> dom = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'isloading'</span>)  <span class="hljs-keyword">if</span> (isLoading) &#123;    dom.setAttribute(<span class="hljs-string">'class'</span>, <span class="hljs-string">'is-loading'</span>)    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;      dom.style.display = <span class="hljs-string">'none'</span>      <span class="hljs-keyword">this</span>.setState(&#123;<span class="hljs-attr">isLoading</span>: <span class="hljs-literal">false</span>&#125;);    &#125;, <span class="hljs-number">1000</span>)  &#125;&#125;</code></pre><h2 id="loading-UI-库"><a href="#loading-UI-库" class="headerlink" title="loading UI 库"></a>loading UI 库</h2><ul><li><a href="https://codepen.io/topic/loader/picks" target="_blank" rel="noopener">CodepenIO Loader Picks</a></li></ul>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>react</tag>
+      
+      <tag>animation</tag>
+      
+    </tags>
     
   </entry>
   

@@ -17,10 +17,21 @@
   <meta name="description" content="">
   <meta name="author" content="itishardi">
   <meta name="keywords" content="">
-  <title>Archives - 哈迪的BLOG</title>
+  <title>React Spin 页面数据加载动画处理 - 哈迪的BLOG</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
+  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -42,7 +53,7 @@
 
 
 <body>
-  <header style="height: 60vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -130,7 +141,7 @@
 </nav>
 
     <div class="view intro-2" id="background" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/example.png') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -138,6 +149,48 @@
             <span class="h2" id="subtitle">
               
             </span>
+
+            
+              
+  <div class="mt-3 post-meta">
+    <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+    <time datetime="2020-06-15 12:15">
+      June 15, 2020 pm
+    </time>
+  </div>
+
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      264 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      3
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- 不蒜子统计文章PV -->
+      <span id="busuanzi_container_page_pv" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="busuanzi_value_page_pv"></span> 次
+      </span>
+    
+  
+</div>
 
             
           </div>
@@ -150,37 +203,122 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">1 posts in total.</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/06/15/React%20Spin%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E5%A4%84%E7%90%86/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">React Spin 页面数据加载动画处理</span>
-      <span style="float: right;">06-15</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <article class="markdown-body">
+              <h2 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h2><p>页面局部处于等待异步数据或正在渲染过程时，合适的加载动效会有效缓解用户的焦虑。（引用antd Spin组件定义）</p>
+<h2 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h2><ol>
+<li>前端框架页面首屏加载</li>
+<li>form表单等组件从后台初次获取、更新内容时的渲染</li>
+</ol>
+<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="ant-design-spin-component"><a href="#ant-design-spin-component" class="headerlink" title="ant design spin component"></a>ant design<a href="https://ant.design/components/spin-cn/" target="_blank" rel="noopener"> spin component</a></h3><p>ant design的组件可以自定义，使用组件应该关注其兼容性的处理</p>
+<h3 id="生命周期中处理渲染"><a href="#生命周期中处理渲染" class="headerlink" title="生命周期中处理渲染"></a>生命周期中处理渲染</h3><p>加载页面时的处理方式：在<code>comoonentWillMount</code>中定义一个当前开始加载的状态，直到<code>componentDidMount</code>时切换渲染已经完全加载完的组件内容。<br>此方式在更新组件内容时<code>componentWillUpdate</code>也同步可以处理。<br>可以定时一段时间来关闭加载状态，具体实现方式随所需效果和接口返回的时间具体处理。</p>
+<pre><code class="hljs javascript">componentWillMount () &#123;
+  <span class="hljs-keyword">let</span> dom = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">'isloading'</span>)
+  <span class="hljs-keyword">if</span> (isLoading) &#123;
+    dom.setAttribute(<span class="hljs-string">'class'</span>, <span class="hljs-string">'is-loading'</span>)
+    setTimeout(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> &#123;
+      dom.style.display = <span class="hljs-string">'none'</span>
+      <span class="hljs-keyword">this</span>.setState(&#123;<span class="hljs-attr">isLoading</span>: <span class="hljs-literal">false</span>&#125;);
+    &#125;, <span class="hljs-number">1000</span>)
+  &#125;
+&#125;</code></pre>
+
+<h2 id="loading-UI-库"><a href="#loading-UI-库" class="headerlink" title="loading UI 库"></a>loading UI 库</h2><ul>
+<li><a href="https://codepen.io/topic/loader/picks" target="_blank" rel="noopener">CodepenIO Loader Picks</a></li>
+</ul>
+
+            </article>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/react/">react</a>
+                    
+                      <a class="hover-with-bg" href="/tags/animation/">animation</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" target="_blank" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <div class="post-prev col-6">
+                    
+                    
+                  </div>
+                  <div class="post-next col-6">
+                    
+                    
+                  </div>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    function loadGitalk(){
+      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
+        var gitalk = new Gitalk({
+          clientID: '975e5a0a15665719e627',
+          clientSecret: '221cc20b1e48575c9e7b9474ad0fca4ab87f1a91',
+          repo: 'gitalk-comments',
+          owner: 'itishardi',
+          admin: 'itishardi',
+          id: 'abe2f11339bee105f3f102052ebaa0c7',
+          language: 'zh-CN',
+          perPage: 20,
+          pagerDirection: 'last',
+          createIssueManually: 'true',
+          distractionFreeMode: 'false'
+        });
+        gitalk.render('gitalk-container');
+      });
+    }
+    createObserver(loadGitalk, 'gitalk-container');
+  </script>
 
 
               </div>
-            </div>
+            
           </div>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
   </main>
 
@@ -284,6 +422,31 @@
 
 
 
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: 'article.markdown-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
 
 
   <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
@@ -291,7 +454,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Archive&nbsp;",
+        "React Spin 页面数据加载动画处理&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,
@@ -306,6 +469,21 @@
 
 
 
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
 
 
   <script  src="/js/local-search.js" ></script>
@@ -319,6 +497,20 @@
   </script>
 
 
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
 
 
 
