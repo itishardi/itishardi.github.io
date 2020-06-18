@@ -30,8 +30,6 @@
   
 
   
-    <link  rel="stylesheet" href="https://cdn.staticfile.org/gitalk/1.6.2/gitalk.css" />
-  
 
 
 <!-- 主题依赖的图标库，不要自行修改 -->
@@ -274,27 +272,22 @@
               <div class="comments" id="comments">
                 
                 
-  <div id="gitalk-container"></div>
   <script type="text/javascript">
-    function loadGitalk(){
-      addScript('https://cdn.staticfile.org/gitalk/1.6.2/gitalk.min.js', function () {
-        var gitalk = new Gitalk({
-          clientID: '7acfb0f72cf242ceb5c0',
-          clientSecret: '042ecfab351e17b7e995c60513f61225e9931aee',
-          repo: 'itishardi.github.io',
-          owner: 'itishardi',
-          admin: 'itishardi',
-          id: 'abe2f11339bee105f3f102052ebaa0c7',
-          language: 'zh-CN',
-          perPage: 15,
-          pagerDirection: 'last',
-          createIssueManually: 'true',
-          distractionFreeMode: 'false'
-        });
-        gitalk.render('gitalk-container');
-      });
+    function loadUtterances() {
+      var s = document.createElement('script');
+      s.setAttribute('src', 'https://utteranc.es/client.js');
+      s.defer = false
+      s.setAttribute('repo', 'itishardi/itishardi.github.io');
+      s.setAttribute('issue-term', 'pathname');
+      
+      s.setAttribute('label', 'utterances');
+      
+      s.setAttribute('theme', 'github-light');
+      s.setAttribute('crossorigin', 'anonymous');
+      var e = document.getElementsByTagName('script')[0];
+      e.parentNode.insertBefore(s, e);
     }
-    createObserver(loadGitalk, 'gitalk-container');
+    createObserver(loadUtterances, 'comments')
   </script>
 
 
