@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>手动触发页面resize事件.md</title>
+    <link href="/2020/06/19/%E6%89%8B%E5%8A%A8%E8%A7%A6%E5%8F%91%E9%A1%B5%E9%9D%A2resize%E4%BA%8B%E4%BB%B6-md/"/>
+    <url>/2020/06/19/%E6%89%8B%E5%8A%A8%E8%A7%A6%E5%8F%91%E9%A1%B5%E9%9D%A2resize%E4%BA%8B%E4%BB%B6-md/</url>
+    
+    <content type="html"><![CDATA[<pre><code class="hljs javascript">&lt;html lang=<span class="hljs-string">"en"</span>&gt;&lt;head&gt;    &lt;meta charset=<span class="hljs-string">"UTF-8"</span>&gt;    &lt;meta name=<span class="hljs-string">"viewport"</span> content=<span class="hljs-string">"width=device-width, initial-scale=1.0"</span>&gt;    &lt;title&gt;js <span class="hljs-built_in">window</span> resize&lt;<span class="hljs-regexp">/title&gt;</span><span class="hljs-regexp">&lt;/</span>head&gt;&lt;body&gt;    &lt;button id=<span class="hljs-string">"fire-resize"</span>&gt;点击触发<span class="hljs-built_in">window</span> resize&lt;<span class="hljs-regexp">/button&gt;</span><span class="hljs-regexp">&lt;/</span>body&gt;&lt;script&gt;    <span class="hljs-keyword">var</span> btn = <span class="hljs-built_in">document</span>.getElementById(<span class="hljs-string">"fire-resize"</span>);    btn.addEventListener(<span class="hljs-string">"click"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;        fireResize()    &#125;)    <span class="hljs-built_in">window</span>.onresize = <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) </span>&#123;        alert(<span class="hljs-string">'触发成功'</span>);    &#125;;    <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fireResize</span>(<span class="hljs-params"></span>) </span>&#123;        <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createEvent) &#123; <span class="hljs-comment">// chrome</span>            <span class="hljs-keyword">var</span> event = <span class="hljs-built_in">document</span>.createEvent(<span class="hljs-string">"HTMLEvents"</span>);            event.initEvent(<span class="hljs-string">"resize"</span>, <span class="hljs-literal">true</span>, <span class="hljs-literal">true</span>);            <span class="hljs-built_in">window</span>.dispatchEvent(event);        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-built_in">document</span>.createEventObject) &#123;  <span class="hljs-comment">// IE不一定有效，会报错</span>            <span class="hljs-built_in">window</span>.fireEvent(<span class="hljs-string">"onresize"</span>);        &#125;    &#125;&lt;<span class="hljs-regexp">/script&gt;</span><span class="hljs-regexp"></span><span class="hljs-regexp">&lt;/</span>html&gt;</code></pre>]]></content>
+    
+    
+    
+    <tags>
+      
+      <tag>javascript</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>React Spin 页面数据加载动画处理</title>
     <link href="/2020/06/15/React%20Spin%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E5%A4%84%E7%90%86/"/>
     <url>/2020/06/15/React%20Spin%E9%A1%B5%E9%9D%A2%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%8A%A8%E7%94%BB%E5%A4%84%E7%90%86/</url>
